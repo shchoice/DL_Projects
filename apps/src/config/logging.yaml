@@ -1,0 +1,4 @@
+rotate:
+  when: "D"
+  interval: 1
+  backupCount: 15

@@ -1,0 +1,5 @@
+uvicorn==0.23.2
+fastapi==0.103.2
+transformers==4.34.0
+torch==2.1.0+cu118
+-f https://download.pytorch.org/whl/torch_stable.html
