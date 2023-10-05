@@ -1,6 +1,10 @@
 from fastapi import APIRouter
 
-deep_learning_router = APIRouter(
-    prefix='/dl',
-    tags=['dl']
+from apps.src.controller import preprocess
+
+classifier_router = APIRouter(
+    prefix='/classifier',
+    tags=['classifier']
 )
+
+classifier_router.include_router(preprocess.router)
