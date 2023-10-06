@@ -2,7 +2,7 @@ from typing import Any, Dict, Union
 
 import yaml
 
-from apps.src.schemas.preprocess_config import PreprocessConfig
+from apps.src.schemas.data_preprocess_config import DataPreprocessConfig
 
 
 def load_yaml_config(yaml_file: str) -> Dict[str, Any]:
@@ -12,7 +12,7 @@ def load_yaml_config(yaml_file: str) -> Dict[str, Any]:
     return yaml_config
 
 
-def load_data_config(yaml_file: str, schema: Union[PreprocessConfig]) -> Dict[str, Any]:
+def load_data_config(yaml_file: str, schema: Union[DataPreprocessConfig]) -> Dict[str, Any]:
     with open(yaml_file, 'r') as f:
         data_config = yaml.safe_load(f)
         data_config['text_dataset'] = schema.text_dataset
