@@ -56,8 +56,8 @@ class DataHandler:
         )
 
         for data_type, df in zip(['전체', 'Train', 'Valid', 'Test'], [df_all, df_train, df_valid, df_test]):
-            self.logger.info(f"{data_type} category 개수 :", df['Category'].nunique(), '개')
-            self.logger.info(f"{data_type} 데이터 개수 :", len(df), 'doc(s)')
+            self.logger.info("%s category 개수: %d 개", data_type, df['Category'].nunique())
+            self.logger.info("%s 데이터 개수: %d doc(s)", data_type, len(df))
 
         return df_train, df_valid, df_test
 

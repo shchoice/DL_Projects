@@ -11,7 +11,7 @@ class DataSaver:
     @staticmethod
     def get_data_dir(data_config: Dict) -> str:
         return os.path.join(data_config['base_dir'], constants.DATA_PATH_NAME,
-                            data_config['test_data'])
+                            data_config['text_dataset'])
 
     @staticmethod
     def clear_and_create_directory(directory: str) -> None:
@@ -21,7 +21,7 @@ class DataSaver:
     @staticmethod
     def save_dataframe_to_csv(df: pd.DataFrame, filepath: str) -> None:
         df.to_csv(
-            path_or_buf=filepath,
+            pepth_or_buf=filepath,
             index=False,
             sep=constants.DATA_COLUMN_SEP,
             header=None,

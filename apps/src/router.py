@@ -7,4 +7,4 @@ classifier_router = APIRouter(
     tags=['classifier']
 )
 
-classifier_router.include_router(preprocess.router)
+classifier_router.include_router(data_preprocess_controller.router)

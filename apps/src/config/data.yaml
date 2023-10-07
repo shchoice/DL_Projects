@@ -9,3 +9,4 @@ min_category_num: 8
 max_len_chunk: 512
 data_augment_num: 5
 random_state: 777
+tokenizer_type: 'None'

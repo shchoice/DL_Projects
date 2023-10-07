@@ -27,4 +27,4 @@ class DataCleaning:
 
     @staticmethod
     def delete_duplicate_data(df: pd.DataFrame, df_columns: List[str]) -> pd.DataFrame:
-        return df.drop_duplicates(df_columns, keep='first', inplace=True)
+        return df.drop_duplicates(df_columns, keep='first')

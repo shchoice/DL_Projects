@@ -3,7 +3,7 @@ import os
 from apps.src.config import constants
 from apps.src.modules.data_preprocessing.cleaning.data_cleaning import DataCleaning
 from apps.src.modules.data_preprocessing.data_handling.data_handler import DataHandler
-from apps.src.modules.data_preprocessing.tokenizing.data_tokenizer import DataTokenizer
+from apps.src.modules.data_preprocessing.data_tokenizing.data_tokenizer import DataTokenizer
 from apps.src.schemas.data_preprocess_config import DataPreprocessConfig
 
 
@@ -27,7 +27,7 @@ class DataPipeline:
 
     def cleaning(self):
         data_cleaning = DataCleaning(self.data_config)
-        self.dataframe = data_cleaning.clean_df(self.dataframe, self.data_config)
+        self.dataframe = data_cleaning.clean_df(self.dataframe, self.data_config['column_name'])
 
     def augmentation(self):
         data_handler = DataHandler()
@@ -35,8 +35,8 @@ class DataPipeline:
         self.dataframe = data_handler.augment_data(self.dataframe)
 
     def tokenizing(self):
-        data_tokeinzer = DataTokenizer()
-        self.dataframe = data_tokeinzer.tokenize_df(self.dataframe)
+        data_tokenizer = DataTokenizer(self.data_config)
+        self.dataframe = data_tokenizer.tokenize_df(self.dataframe)
 
     def save_preprocessed_data(self):
         data_handler = DataHandler()
