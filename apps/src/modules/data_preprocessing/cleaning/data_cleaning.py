@@ -21,7 +21,7 @@ class DataCleaning:
     @staticmethod
     def strip_column(df: pd.DataFrame, df_columns: List[str]) -> pd.DataFrame:
         for df_column in df_columns:
-            df[df_column] = df[df_column].astype(str).str.strip()
+            df.loc[:, df_column] = df[df_column].astype(str).str.strip()
 
         return df
 

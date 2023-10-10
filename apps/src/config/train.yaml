@@ -1,0 +1,32 @@
+model_type: None
+text_dataset: None
+base_dir: None
+gpu_id: None
+load_trained_model: None
+load_model_name: None
+filename_extension: '.tsv'
+
+tokenizer:
+  padding: 'max_length'
+
+dataloader:
+  delimiter: '\t'
+  column_names:
+    - ID
+    - Category
+    - Text
+
+trainer_args:
+  per_device_train_batch_size: 32
+  per_device_eval_batch_size: 2
+  num_train_epochs: 1
+  evaluation_strategy: 'steps'
+  steps: 300
+  learning_rate: 5e-4
+  output_dir: None
+  logging_dir: None
+  weight_decay: 0.1
+  early_stopping_patience: 10
+
+KoBERT:
+  max_length: 64

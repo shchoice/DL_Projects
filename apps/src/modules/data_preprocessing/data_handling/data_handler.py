@@ -66,5 +66,5 @@ class DataHandler:
 
         df_train_valid = pd.concat([df_train, df_valid])
 
-        DataSaver.save_df_splitted(df_train, df_valid, df_train_valid, df_test, data_config)
+        DataSaver.save_df_splitted(df_train, df_valid, df_test,  df_train_valid, data_config)
         self.logger.info("Finsished creating a train/balid/test Dataset TSV file ")

@@ -8,7 +8,7 @@ from fastapi_utils.cbv import cbv
 from fastapi_utils.inferring_router import InferringRouter
 
 from apps.src.config import constants
-from apps.src.exception.preprocess_exception import PreprocessException
+from apps.src.exception.data_preprocess_exception import DataPreprocessException
 from apps.src.schemas.data_preprocess_config import DataPreprocessConfig
 from apps.src.service.data_preprocess_service import DataPreprocessService
 from apps.src.utils.log.log_message import LogMessage
@@ -35,9 +35,10 @@ class DataPreprocessController:
             data_preprocess_service.run_preprocess()
 
             response.status_code = status.HTTP_200_OK
-            self.logger.info("Preprocessing Succeed")
+            self.logger.info("Data preprocessing controller execution was successful")
+
             return {"Message": "Success"}
-        except PreprocessException as pe:
+        except DataPreprocessException as pe:
             exc_type, exc_value, exc_traceback = sys.exc_info()
             self.logger.error(self.log_message.make_log_message(
                     line_no=self.log_message.get_line_number(exc_traceback),
@@ -45,6 +46,7 @@ class DataPreprocessController:
                 )
             )
             response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+
             return {"Error": str(pe)}
         except Exception as e:
             exc_type, exc_value, exc_traceback = sys.exc_info()
@@ -54,4 +56,5 @@ class DataPreprocessController:
                 )
             )
             response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+
             return {"Error": "An unexpected error occurred." + str(e)}
