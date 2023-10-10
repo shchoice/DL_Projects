@@ -17,11 +17,11 @@ dataloader:
     - Text
 
 trainer_args:
-  per_device_train_batch_size: 32
-  per_device_eval_batch_size: 2
-  num_train_epochs: 1
+  per_device_train_batch_size: 64
+  per_device_eval_batch_size: 32
+  num_train_epochs: 100
   evaluation_strategy: 'steps'
-  steps: 300
+  steps: 1000
   learning_rate: 5e-4
   output_dir: None
   logging_dir: None
@@ -29,4 +29,4 @@ trainer_args:
   early_stopping_patience: 10
 
 KoBERT:
-  max_length: 64
+  max_length: 51
