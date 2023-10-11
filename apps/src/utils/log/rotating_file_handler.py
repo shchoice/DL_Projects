@@ -10,7 +10,8 @@ class CustomTimedRotatingFileHandler(TimedRotatingFileHandler):
     def __init__(self, filename_template, *args, **kwargs):
         self.filename_template = filename_template
         self.init = True
-        super().__init__(self.generate_filename(), *args, **kwargs)
+
+        self.when = kwargs.get('when', 'D').upper()
 
         if self.when == 'S':
             self.interval = 1  # one second
@@ -41,18 +42,11 @@ class CustomTimedRotatingFileHandler(TimedRotatingFileHandler):
             raise ValueError("Invalid rollover interval specified: %s" % self.when)
         self.extMatch = re.compile(self.extMatch, re.ASCII)
 
+        super().__init__(self.generate_filename(), *args, **kwargs)
+
     def generate_filename(self):
-        if self.init is True:
-            import os
-            dir_name, baseName = os.path.split(self.filename_template)
-            file_name = baseName.split('-')[0] + "-" + str(os.getpid())
-            self.init = False
-            return dir_name + os.sep + file_name + constants.LOGGING_EXTENSION_NAME
-
-        one_time_ago = self.get_datetime()
-        previous_date = one_time_ago.strftime(self.suffix)
-
-        return self.filename_template.format(date=previous_date)
+        current_date = datetime.now().strftime(self.suffix)
+        return self.filename_template.format(date=current_date)
 
     def get_datetime(self):
         if self.when == 'S':

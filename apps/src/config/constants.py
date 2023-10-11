@@ -7,6 +7,7 @@ CONFIG_UVICORN_YAML_FILE_NAME: Final = os.path.join(CONFIG_PATH_NAME, 'asgi.yaml
 CONFIG_LOGGING_YAML_FILE_NAME: Final = os.path.join(CONFIG_PATH_NAME, 'logging.yaml')
 CONFIG_DATA_YAML_FILE_NAME: Final = os.path.join(CONFIG_PATH_NAME, 'data.yaml')
 CONFIG_TRAIN_YAML_FILE_NAME: Final = os.path.join(CONFIG_PATH_NAME, 'train.yaml')
+# CONFIG_TRAIN_YAML_FILE_NAME: Final = os.path.join(CONFIG_PATH_NAME, 'predict.yaml')
 
 # LOGGER
 LOGGER_INFO_NAME: Final = 'uvicorn.info'

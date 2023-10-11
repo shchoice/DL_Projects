@@ -8,9 +8,9 @@ class MetricsManager:
     F1_METRIC = load_metric("f1")
 
     @classmethod
-    def compute_metrics(cls, p):
-        predictions = p.predictions.argmax(-1).tolist()
-        labels = p.label_ids.tolist()
+    def compute_metrics(cls, prediction_output):
+        predictions = prediction_output.predictions.argmax(-1).tolist()
+        labels = prediction_output.label_ids.tolist()
 
         accuracy = cls.ACCURACY_METRIC.compute(predictions=predictions, references=labels)
         precision = cls.PRECISION_METRIC.compute(predictions=predictions, references=labels, average='macro')

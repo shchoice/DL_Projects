@@ -23,6 +23,7 @@ class DataLoader:
             dataset_type: self.get_dataset_file_path(dataset_type) for dataset_type in ['train', 'valid', 'test']
         }
 
+        self.logger.info('Read datasets')
         dataset = load_dataset(
             'csv',
             data_files=dataset_files,
