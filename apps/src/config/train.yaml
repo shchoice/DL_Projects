@@ -22,7 +22,11 @@ trainer_args:
   num_train_epochs: 100
   evaluation_strategy: 'steps'
   steps: 1000
-  learning_rate: 5e-4
+  learning_rate: 5e-3
+  optim: 'adamw_torch'
+  warmup_ratio: 0
+  warmup_steps: 0
+  lr_scheduler_type: 'cosine'
   output_dir: None
   logging_dir: None
   weight_decay: 0.1

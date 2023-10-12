@@ -29,6 +29,10 @@ DATA_TEST_PATH_NAME: Final = 'test'
 MODEL_PATH_NAME: Final = 'apps/volumes/models'
 MODEL_KOBERT_CARD_NAME: Final = 'skt/kobert-base-v1'
 MODEL_KOBERT_FINAL: Final = 'final'
+MODEL_CONFIG_PATH_NAME: Final = 'apps/volumes/config'
 
-# output
-MODEL_OUTPUT_PATH_NAME: Final = 'apps/volumes/output'
+# OUTPUT
+OUTPUT_PATH_NAME: Final = 'apps/volumes/output'
+
+# LABEL ENCODER
+LABEL_ENCODER_NAME: Final = 'label_encoder.pkl'

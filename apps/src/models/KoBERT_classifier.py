@@ -26,17 +26,24 @@ class KoBERTClassifier:
         )
 
     def tokenize(self, examples):
-        def find_invalid_data(data_list):
-            invalid_data = [(index, item) for index, item in enumerate(data_list) if not isinstance(item, str)]
-            return invalid_data
-
-        invalid_entries = find_invalid_data(examples['Text'])
-        if len(invalid_entries) > 0:
-            self.logger.error(invalid_entries)
-            self.logger.error(examples['Text'][330])
-        return self.tokenizer(
+        # def find_invalid_data(data_list):
+        #     invalid_data = [(index, item) for index, item in enumerate(data_list) if not isinstance(item, str)]
+        #     return invalid_data
+        #
+        # invalid_entries = find_invalid_data(examples['Text'])
+        # if len(invalid_entries) > 0:
+        #     self.logger.error(invalid_entries)
+        #     self.logger.error(examples['Text'][330])
+        tokenized_data = self.tokenizer(
             examples['Text'],
             truncation=True,
             max_length=self.train_config['KoBERT']['max_length'],
             padding=self.train_config['tokenizer']['padding']
         )
+
+        return {
+            "input_ids": tokenized_data["input_ids"],
+            "token_type_ids": tokenized_data.get("token_type_ids", None),
+            "attention_mask": tokenized_data["attention_mask"],
+            "labels": examples["labels"]
+        }
