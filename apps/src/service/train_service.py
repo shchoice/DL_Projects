@@ -1,6 +1,5 @@
 import logging
 
-import torch
 from transformers import DataCollatorWithPadding
 from transformers import logging as transformers_logging
 
@@ -45,7 +44,6 @@ class TrainService:
         dataset = dataset.map(classifier_model.tokenize, batched=True)
         self.logger.info('Text tokenzing finished!')
 
-
         # 3. 모델 학습
         data_collator = DataCollatorWithPadding(tokenizer=classifier_model.tokenizer)
         early_stopping_callback = \
@@ -75,10 +73,7 @@ class TrainService:
         test_prediction = trainer.evaluate(dataset['test'])
         self.logger.info('Test dataset validation result: %s', test_prediction)
 
-        if trainer.model is not None:
-            trainer.model.cpu()
-
-        KoBERTPredictor(trained_model=trainer.model, from_trainer=True)
+        KoBERTPredictor(trained_model=trainer.model, predict_config=self.train_config, from_trainer=True)
 
         del trainer
 
