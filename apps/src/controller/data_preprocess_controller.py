@@ -35,7 +35,7 @@ class DataPreprocessController:
             data_preprocess_service.run_preprocess()
 
             response.status_code = status.HTTP_200_OK
-            self.logger.info("Data preprocessing controller execution was successful")
+            self.logger.info("Data preprocessing service execution was successful")
 
             return {"Message": "Success"}
         except DataPreprocessException as pe:

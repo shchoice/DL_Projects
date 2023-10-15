@@ -31,7 +31,8 @@ class BaseConfig:
 
     def _get_config_path(self) -> str:
         return os.path.join(self.model_config['base_dir'], constants.MODEL_CONFIG_PATH_NAME,
-                            self.model_config['text_dataset'], self.model_config['model_type'], 'config.yaml')
+                            self.model_config['text_dataset'], self.model_config['model_type'],
+                            constants.MODEL_CONFIG_YAML_FILE_NAME)
 
     def _load_config_from_file(self, config_path: str):
         with open(config_path, 'r') as f:

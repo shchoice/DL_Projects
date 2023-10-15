@@ -34,7 +34,7 @@ class TrainController:
             train_service.run_classifier()
 
             response.status_code = status.HTTP_200_OK
-            self.logger.info("Train controller execution was successful")
+            self.logger.info("Training service execution was successful")
 
             return {"Message": "Success"}
         except TrainException as te:

@@ -1,12 +1,14 @@
 import os
-from typing import Any, Dict, Union
+from typing import Any, Dict, Union, Type
 
 import yaml
 
 from apps.src.config import constants
+from apps.src.exception.model_exchange_exception import ModelExchangeException
 from apps.src.schemas.data_preprocess_config import DataPreprocessConfig
 from apps.src.schemas.predict_config import PredictConfig
 from apps.src.schemas.train_config import TrainConfig
+from apps.src.service.reload_config import ReloadConfig
 
 
 def load_yaml_config(yaml_file: str) -> Dict[str, Any]:
@@ -39,6 +41,7 @@ def load_train_config(yaml_file: str, schema: Union[TrainConfig]) -> Dict[str, A
 
 def load_predict_config(schema: Union[PredictConfig]) -> Dict[str, Any]:
     yaml_file = os.path.join(schema.base_dir, constants.MODEL_CONFIG_PATH_NAME, schema.text_dataset, schema.model_type, 'config.yaml')
+
     with open(yaml_file, 'r') as f:
         predict_config = yaml.safe_load(f)
         predict_config['model_type'] = schema.model_type
@@ -52,3 +55,21 @@ def load_predict_config(schema: Union[PredictConfig]) -> Dict[str, Any]:
 
     return predict_config
 
+def load_reload_model_config(schema: Type[ReloadConfig]) -> Dict[str, Any]:
+    yaml_file = os.path.join(schema.base_dir, constants.MODEL_CONFIG_PATH_NAME,
+                            schema.text_dataset, schema.model_type,
+                            constants.MODEL_CONFIG_YAML_FILE_NAME)
+
+    with open(yaml_file, 'r') as f:
+        reload_config = yaml.safe_load(f)
+
+        if reload_config['model_type'] != schema.model_type:
+            raise ModelExchangeException(f"Check Input parameter {schema.model_type}, expect: {reload_config['model_type']}")
+        elif reload_config['text_dataset'] != schema.text_dataset:
+            raise ModelExchangeException(f"Check Input parameter {schema.text_dataset}, expect: {reload_config['text_dataset']}")
+        elif reload_config['base_dir'] != schema.base_dir:
+            raise ModelExchangeException(f"Check Input parameter {schema.base_dir}, expect: {reload_config['base_dir']}")
+
+        reload_config['load_model_name'] = schema.load_model_name
+
+    return reload_config

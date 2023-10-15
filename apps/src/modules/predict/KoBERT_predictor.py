@@ -9,6 +9,7 @@ from kobert_tokenizer import KoBERTTokenizer
 from transformers import BertForSequenceClassification
 
 from apps.src.config import constants
+from apps.src.exception.model_exchange_exception import ModelExchangeException
 from apps.src.modules.common.label_encoder_manager import LabelEncoderManager
 from apps.src.modules.predict.base_predictor import BasePredictor
 
@@ -44,6 +45,7 @@ class KoBERTPredictor(BasePredictor):
             self.logger.info('New KoBERT model is loaded: %s', checkpoint)
         else:
             self.logger.error('Model path does not exist: %s', checkpoint)
+            raise ModelExchangeException(f'Not found error: Check model checkpoint path, {checkpoint}')
 
     def _get_gpu_device(self):
         gpu_id = self.predict_config['gpu_id']

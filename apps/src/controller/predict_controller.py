@@ -8,12 +8,14 @@ from fastapi_utils.cbv import cbv
 from fastapi_utils.inferring_router import InferringRouter
 
 from apps.src.config import constants
+from apps.src.exception.model_exchange_exception import ModelExchangeException
 from apps.src.exception.predict_exception import PredictException
 from apps.src.schemas.predict_config import PredictConfig
+from apps.src.service.reload_config import ReloadConfig
 from apps.src.service.predict_service import PredictService
 from apps.src.utils.json.make_predict_json import set_hits_json, set_response_json
 from apps.src.utils.log.log_message import LogMessage
-from apps.src.utils.yaml.load import load_predict_config
+from apps.src.utils.yaml.load import load_predict_config, load_reload_model_config
 
 router = InferringRouter()
 
@@ -38,10 +40,10 @@ class PredictController:
             response_json = set_response_json(hits_json, predict_config, exec_time)
 
             response.status_code = status.HTTP_200_OK
-            self.logger.info("Predict controller execution was successful")
+            self.logger.info("Prediction service execution was successful")
 
             return {"message": "success", "json": response_json}
-        except PredictException as te:
+        except PredictException as pe:
             exc_type, exc_value, exc_traceback = sys.exc_info()
             self.logger.error(self.log_message.make_log_message(
                     line_no=self.log_message.get_line_number(exc_traceback),
@@ -50,7 +52,40 @@ class PredictController:
             )
             response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
 
-            return {"Error": str(te)}
+            return {"Error": str(pe)}
+        except Exception as e:
+            exc_type, exc_value, exc_traceback = sys.exc_info()
+            self.logger.error(self.log_message.make_log_message(
+                    line_no=self.log_message.get_line_number(exc_traceback),
+                    stack_trace=self.log_message.stack_trace(exc_type, exc_value, exc_traceback)
+                )
+            )
+            response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+
+            return {"Error": "An unexpected error occurred." + str(e)}
+
+    @router.post('/model/exchange')
+    def model_exchange(self, reload_config: ReloadConfig, response: Response) -> Dict[str, Any]:
+        try:
+            reload_config = load_reload_model_config(schema=reload_config)
+
+            predict_service = PredictService(reload_config)
+            predict_service.run_model_exchange()
+
+            response.status_code = status.HTTP_200_OK
+            self.logger.info("Model exchange execution was successful")
+
+            return {"message": "success"}
+        except ModelExchangeException as mee:
+            exc_type, exc_value, exc_traceback = sys.exc_info()
+            self.logger.error(self.log_message.make_log_message(
+                    line_no=self.log_message.get_line_number(exc_traceback),
+                    stack_trace=self.log_message.stack_trace(exc_type, exc_value, exc_traceback)
+                )
+            )
+            response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+
+            return {"Error": str(mee)}
         except Exception as e:
             exc_type, exc_value, exc_traceback = sys.exc_info()
             self.logger.error(self.log_message.make_log_message(

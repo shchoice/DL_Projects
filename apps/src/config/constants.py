@@ -7,7 +7,6 @@ CONFIG_UVICORN_YAML_FILE_NAME: Final = os.path.join(CONFIG_PATH_NAME, 'asgi.yaml
 CONFIG_LOGGING_YAML_FILE_NAME: Final = os.path.join(CONFIG_PATH_NAME, 'logging.yaml')
 CONFIG_DATA_YAML_FILE_NAME: Final = os.path.join(CONFIG_PATH_NAME, 'data.yaml')
 CONFIG_TRAIN_YAML_FILE_NAME: Final = os.path.join(CONFIG_PATH_NAME, 'train.yaml')
-# CONFIG_TRAIN_YAML_FILE_NAME: Final = os.path.join(CONFIG_PATH_NAME, 'predict.yaml')
 
 # LOGGER
 LOGGER_INFO_NAME: Final = 'uvicorn.info'
@@ -29,6 +28,7 @@ DATA_TEST_PATH_NAME: Final = 'test'
 MODEL_PATH_NAME: Final = 'apps/volumes/models'
 MODEL_KOBERT_CARD_NAME: Final = 'skt/kobert-base-v1'
 MODEL_KOBERT_FINAL: Final = 'final'
+MODEL_CONFIG_YAML_FILE_NAME: Final = 'config.yaml'
 MODEL_CONFIG_PATH_NAME: Final = 'apps/volumes/config'
 
 # OUTPUT
