@@ -39,8 +39,10 @@ def load_train_config(yaml_file: str, schema: Union[TrainConfig]) -> Dict[str, A
 
     return train_config
 
+
 def load_predict_config(schema: Union[PredictConfig]) -> Dict[str, Any]:
-    yaml_file = os.path.join(schema.base_dir, constants.MODEL_CONFIG_PATH_NAME, schema.text_dataset, schema.model_type, 'config.yaml')
+    yaml_file = os.path.join(schema.base_dir, constants.MODEL_CONFIG_PATH_NAME, schema.text_dataset, schema.model_type,
+                             constants.MODEL_CONFIG_YAML_FILE_NAME)
 
     with open(yaml_file, 'r') as f:
         predict_config = yaml.safe_load(f)
@@ -54,6 +56,7 @@ def load_predict_config(schema: Union[PredictConfig]) -> Dict[str, Any]:
         predict_config['load_model_name'] = schema.load_model_name
 
     return predict_config
+
 
 def load_reload_model_config(schema: Type[ReloadConfig]) -> Dict[str, Any]:
     yaml_file = os.path.join(schema.base_dir, constants.MODEL_CONFIG_PATH_NAME,
