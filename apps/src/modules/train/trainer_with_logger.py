@@ -2,7 +2,7 @@ from typing import Dict, Any
 
 from transformers import Trainer
 
-class ClassifierTrainer(Trainer):
+class TrainerWithLogger(Trainer):
     def __init__(self, tqdm_logger, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.tqdm_logger = tqdm_logger

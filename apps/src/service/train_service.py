@@ -6,7 +6,7 @@ from transformers import logging as transformers_logging
 from apps.src.config import constants
 from apps.src.modules.common.label_encoder_manager import LabelEncoderManager
 from apps.src.modules.predict.KoBERT_predictor import KoBERTPredictor
-from apps.src.modules.train.classifier_trainer import ClassifierTrainer
+from apps.src.modules.train.trainer_with_logger import TrainerWithLogger
 from apps.src.modules.train.data_load_manager import DataLoadManager
 from apps.src.modules.train.early_stopping import SaveLastModelCallback
 from apps.src.modules.train.metrics_manager import MetricsManager
@@ -49,7 +49,7 @@ class TrainService:
         early_stopping_callback = \
             SaveLastModelCallback(early_stopping_patience=self.train_config['trainer_args']['early_stopping_patience'])
 
-        trainer = ClassifierTrainer(
+        trainer = TrainerWithLogger(
             model=classifier_model.model,
             args=self.training_config_manager.get_training_arguments(),
             train_dataset=dataset["train"],

@@ -7,6 +7,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 from apps.src.config import constants
+from apps.src.exception.data_preprocess_exception import DataPreprocessException
 from apps.src.modules.data_preprocessing.data_handling.data_saver import DataSaver
 
 
@@ -17,7 +18,7 @@ class DataHandler:
     @staticmethod
     def read_tsv_files(tsv_files_path: str, filename_extension: str) -> List[str]:
         if not os.path.exists(tsv_files_path):
-            raise Exception(f'TSV files does not exist: {tsv_files_path}')
+            raise DataPreprocessException(f'TSV files does not exist: {tsv_files_path}')
 
         return [os.path.join(tsv_files_path, f) for f in os.listdir(tsv_files_path) if f.endswith(filename_extension)]
 
