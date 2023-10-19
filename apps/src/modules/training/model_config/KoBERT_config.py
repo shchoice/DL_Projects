@@ -1,4 +1,4 @@
-from apps.src.modules.train.model_config.base_config import BaseConfig
+from apps.src.modules.training.model_config.base_config import BaseConfig
 
 
 class KoBERTConfig(BaseConfig):

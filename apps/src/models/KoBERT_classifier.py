@@ -21,19 +21,17 @@ class KoBERTClassifier:
 
     def load_model(self, num_labels):
         self.tokenizer = KoBERTTokenizer.from_pretrained(self.model_card, cache_dir=self.cache_dir)
-        self.model = BertForSequenceClassification.from_pretrained(
-            self.model_card, num_labels=num_labels, cache_dir=self.cache_dir
+        if self.train_config['load_trained_model'] is False:
+            self.model = BertForSequenceClassification.from_pretrained(
+                self.model_card, num_labels=num_labels, cache_dir=self.cache_dir
         )
+        elif self.train_config['load_trained_model'] is True:
+            checkpoint = self.get_model_path()
+            self.model = BertForSequenceClassification.from_pretrained(
+                checkpoint, num_labels=num_labels, cache_dir=self.cache_dir
+            )
 
     def tokenize(self, examples):
-        # def find_invalid_data(data_list):
-        #     invalid_data = [(index, item) for index, item in enumerate(data_list) if not isinstance(item, str)]
-        #     return invalid_data
-        #
-        # invalid_entries = find_invalid_data(examples['Text'])
-        # if len(invalid_entries) > 0:
-        #     self.logger.error(invalid_entries)
-        #     self.logger.error(examples['Text'][330])
         tokenized_data = self.tokenizer(
             examples['Text'],
             truncation=True,
@@ -47,3 +45,7 @@ class KoBERTClassifier:
             "attention_mask": tokenized_data["attention_mask"],
             "labels": examples["labels"]
         }
+
+    def get_model_path(self):
+        return os.path.join(self.train_config['base_dir'], constants.OUTPUT_PATH_NAME,
+                            self.train_config['text_dataset'], 'KoBERT', self.train_config['load_model_name'])

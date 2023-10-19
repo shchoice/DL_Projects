@@ -12,7 +12,7 @@ from apps.src.exception.model_exchange_exception import ModelExchangeException
 from apps.src.exception.predict_exception import PredictException
 from apps.src.schemas.predict_config import PredictConfig
 from apps.src.service.reload_config import ReloadConfig
-from apps.src.service.predict_service import PredictService
+from apps.src.service.prediction_service import PredictionService
 from apps.src.utils.json.make_predict_json import set_hits_json, set_response_json
 from apps.src.utils.log.log_message import LogMessage
 from apps.src.utils.yaml.load import load_predict_config, load_reload_model_config
@@ -21,18 +21,18 @@ router = InferringRouter()
 
 
 @cbv(router)
-class PredictController:
+class PredictionController:
     def __init__(self):
         self.logger = logging.getLogger(constants.LOGGER_INFO_NAME)
         self.log_message = LogMessage()
 
     @router.post('/predict')
-    def predict_controller(self, predict_config: PredictConfig, response: Response) -> Dict[str, Any]:
+    def prediction_controller(self, predict_config: PredictConfig, response: Response) -> Dict[str, Any]:
         try:
             start_time = time.perf_counter()
             predict_config = load_predict_config(schema=predict_config)
 
-            predict_service = PredictService(predict_config)
+            predict_service = PredictionService(predict_config)
             top_k_decoded_labels, top_k_values = predict_service.run_predict()
 
             exec_time = time.perf_counter() - start_time
@@ -69,8 +69,8 @@ class PredictController:
         try:
             reload_config = load_reload_model_config(schema=reload_config)
 
-            predict_service = PredictService(reload_config)
-            predict_service.run_model_exchange()
+            prediction_service = PredictionService(reload_config)
+            prediction_service.run_model_exchange()
 
             response.status_code = status.HTTP_200_OK
             self.logger.info("Model exchange execution was successful")

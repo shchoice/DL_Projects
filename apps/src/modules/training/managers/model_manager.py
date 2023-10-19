@@ -1,4 +1,4 @@
-from apps.src.config.model_config.KoBERT_config import KoBERTConfig
+from apps.src.modules.training.model_config.KoBERT_config import KoBERTConfig
 from apps.src.models.KoBERT_classifier import KoBERTClassifier
 
 
@@ -13,7 +13,18 @@ class ModelManager:
 
     def __init__(self, config):
         if hasattr(self, "initialized") and self.initialized:
-            return
+            self.config = config
+            if self.config['model_type'] == 'KoBERT':
+                config_instance = KoBERTConfig(
+                    self.config['model_type'], self.config['base_dir'], self.config['text_dataset']
+                )
+                config_instance.set_model_config(['model_type'], self.config['model_type'])
+                config_instance.set_model_config(['base_dir'], self.config['base_dir'])
+                config_instance.set_model_config(['text_dataset'], self.config['text_dataset'])
+                config_instance.set_model_config(['gpu_id'], self.config['gpu_id'])
+                config_instance.set_model_config(['load_trained_model'], self.config['load_trained_model'])
+                config_instance.set_model_config(['load_model_name'], self.config['load_model_name'])
+                return
 
         self.config = config
         self.kobert_config = KoBERTConfig(

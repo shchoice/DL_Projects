@@ -9,7 +9,7 @@ from fastapi_utils.inferring_router import InferringRouter
 from apps.src.config import constants
 from apps.src.exception.train_exception import TrainException
 from apps.src.schemas.train_config import TrainConfig
-from apps.src.service.train_service import TrainService
+from apps.src.service.training_service import TrainingService
 from apps.src.utils.log.log_message import LogMessage
 from apps.src.utils.yaml.load import load_train_config
 
@@ -17,21 +17,21 @@ router = InferringRouter()
 
 
 @cbv(router)
-class TrainController:
+class TrainingController:
     def __init__(self):
         self.logger = logging.getLogger(constants.LOGGER_INFO_NAME)
         self.log_message = LogMessage()
 
     @router.post('/train')
-    def train_controller(self, train_config: TrainConfig, response: Response) -> Dict[str, Any]:
+    def training_controller(self, train_config: TrainConfig, response: Response) -> Dict[str, Any]:
         try:
             train_config = load_train_config(
                 yaml_file=constants.CONFIG_TRAIN_YAML_FILE_NAME,
                 schema=train_config
             )
 
-            train_service = TrainService(train_config)
-            train_service.run_classifier()
+            training_service = TrainingService(train_config)
+            training_service.run_classifier()
 
             response.status_code = status.HTTP_200_OK
             self.logger.info("Training service execution was successful")

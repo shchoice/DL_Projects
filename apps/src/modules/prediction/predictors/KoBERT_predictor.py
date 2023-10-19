@@ -1,3 +1,4 @@
+import logging
 import os.path
 from typing import Tuple, List
 
@@ -11,12 +12,14 @@ from transformers import BertForSequenceClassification
 from apps.src.config import constants
 from apps.src.exception.model_exchange_exception import ModelExchangeException
 from apps.src.modules.common.label_encoder_manager import LabelEncoderManager
-from apps.src.modules.predict.base_predictor import BasePredictor
 
 
-class KoBERTPredictor(BasePredictor):
+class KoBERTPredictor:
     def __init__(self, trained_model=None, predict_config=None, from_trainer=False):
-        super().__init__(predict_config)
+        self._model = None
+        self.multi_gpu = False
+        self.predict_config = predict_config
+        self.logger = logging.getLogger(constants.LOGGER_INFO_NAME)
 
         self.device = self._get_gpu_device()
         self.tokenizer = KoBERTTokenizer.from_pretrained(constants.MODEL_KOBERT_CARD_NAME)
@@ -36,7 +39,11 @@ class KoBERTPredictor(BasePredictor):
             self._model = torch.nn.DataParallel(self._model)
         self._model.to(self.device)
 
-    @BasePredictor.model.setter
+    @property
+    def model(self):
+        return self._model
+
+    @model.setter
     def model(self, checkpoint):
         if os.path.exists(checkpoint):
             print(torch.cuda.device_count())
@@ -63,7 +70,6 @@ class KoBERTPredictor(BasePredictor):
                 raise ValueError(f"Invalid gpu_id: {gpu_id}")
 
             self.multi_gpu = True if len(gpu_ids) > 1 else False
-            # os.environ["CUDA_VISIBLE_DEVICES"] = ",".join(map(str, gpu_ids))
             return torch.device(f"cuda:{gpu_ids[0]}")
         else:
             return torch.device(f"cuda:{gpu_id}")

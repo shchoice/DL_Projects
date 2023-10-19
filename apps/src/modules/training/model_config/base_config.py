@@ -45,7 +45,11 @@ class BaseConfig:
     def set_model_config(self, key_path: List[str], value: Any):
         config = self.model_config
         for key in key_path[:-1]:
+            if key not in config:
+                raise KeyError(f"Key '{key}' not found in the configuration.")
             config = config.get(key, {})
+        if key_path[-1] not in config:
+            raise KeyError(f"Key '{key_path[-1]}' not found in the configuration.")
         config[key_path[-1]] = value
 
     def save_model_config(self, config):

@@ -10,7 +10,7 @@ from fastapi_utils.inferring_router import InferringRouter
 from apps.src.config import constants
 from apps.src.exception.data_preprocess_exception import DataPreprocessException
 from apps.src.schemas.data_preprocess_config import DataPreprocessConfig
-from apps.src.service.data_preprocess_service import DataPreprocessService
+from apps.src.service.data_preprocessing_service import DataPreprocessService
 from apps.src.utils.log.log_message import LogMessage
 from apps.src.utils.yaml.load import load_data_config
 
@@ -18,21 +18,21 @@ from apps.src.utils.yaml.load import load_data_config
 router = InferringRouter()
 
 @cbv(router)
-class DataPreprocessController:
+class DataPreprocessingController:
     def __init__(self):
         self.logger = logging.getLogger(constants.LOGGER_INFO_NAME)
         self.log_message = LogMessage()
 
     @router.post('/preprocess')
-    def data_preprocess(self, data_preprocess_config: DataPreprocessConfig, response: Response) -> Dict[str, Any]:
+    def data_preprocessing(self, data_preprocess_config: DataPreprocessConfig, response: Response) -> Dict[str, Any]:
         try:
             data_config = load_data_config(
                 yaml_file=constants.CONFIG_DATA_YAML_FILE_NAME,
                 schema=data_preprocess_config
             )
 
-            data_preprocess_service = DataPreprocessService(data_config)
-            data_preprocess_service.run_preprocess()
+            data_preprocessing_service = DataPreprocessService(data_config)
+            data_preprocessing_service.run_preprocess()
 
             response.status_code = status.HTTP_200_OK
             self.logger.info("Data preprocessing service execution was successful")
