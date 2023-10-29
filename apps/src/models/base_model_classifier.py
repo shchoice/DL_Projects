@@ -2,11 +2,11 @@ import os
 from abc import ABC, abstractmethod
 
 from apps.src.config import constants
-from apps.src.schemas.train_config import TrainConfig
+from apps.src.schemas.train_schema import TrainSchema
 
 
 class BaseModelClassifier(ABC):
-    def __init__(self, num_labels: int, train_config: TrainConfig):
+    def __init__(self, num_labels: int, train_config: TrainSchema):
         self.tokenizer = None
         self.model = self.load_model(num_labels)
         self.train_config = train_config

@@ -4,11 +4,11 @@ from apps.src.config import constants
 from apps.src.modules.data_preprocessing.cleaning.data_cleaning import DataCleaning
 from apps.src.modules.data_preprocessing.data_handling.data_handler import DataHandler
 from apps.src.modules.data_preprocessing.data_tokenizing.data_tokenizer import DataTokenizer
-from apps.src.schemas.data_preprocess_config import DataPreprocessConfig
+from apps.src.schemas.data_preprocess_schema import DataPreprocessSchema
 
 
 class DataPipeline:
-    def __init__(self, data_config: DataPreprocessConfig):
+    def __init__(self, data_config: DataPreprocessSchema):
         self.data_config = data_config
         self.dataframe = None
 

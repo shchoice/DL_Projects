@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class ReloadConfig(BaseModel):
+class ReloadSchema(BaseModel):
     model_type: str
     text_dataset: str
     base_dir: str

@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from apps.src.config import constants
 
 
-class TrainConfig(BaseModel):
+class TrainSchema(BaseModel):
     model_type: str
     text_dataset: str
     base_dir: str

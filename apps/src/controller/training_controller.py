@@ -8,10 +8,10 @@ from fastapi_utils.inferring_router import InferringRouter
 
 from apps.src.config import constants
 from apps.src.exception.train_exception import TrainException
-from apps.src.schemas.train_config import TrainConfig
+from apps.src.modules.common.config_manager import ConfigManager
+from apps.src.schemas.train_schema import TrainSchema
 from apps.src.service.training_service import TrainingService
 from apps.src.utils.log.log_message import LogMessage
-from apps.src.utils.yaml.load import load_train_config
 
 router = InferringRouter()
 
@@ -23,12 +23,14 @@ class TrainingController:
         self.log_message = LogMessage()
 
     @router.post('/train')
-    def training_controller(self, train_config: TrainConfig, response: Response) -> Dict[str, Any]:
+    def training_controller(self, train_schema: TrainSchema, response: Response) -> Dict[str, Any]:
         try:
-            train_config = load_train_config(
-                yaml_file=constants.CONFIG_TRAIN_YAML_FILE_NAME,
-                schema=train_config
+            train_config = ConfigManager.get_config_instance(
+                train_schema.model_type, train_schema.base_dir, train_schema.text_dataset
             )
+            train_config.set_model_config(['gpu_id'], train_schema.gpu_id)
+            train_config.set_model_config(['load_trained_model'], train_schema.load_trained_model)
+            train_config.set_model_config(['load_model_name'], train_schema.load_model_name)
 
             training_service = TrainingService(train_config)
             training_service.run_classifier()

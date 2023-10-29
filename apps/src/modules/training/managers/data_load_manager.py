@@ -2,12 +2,12 @@ import logging
 import os
 
 from apps.src.config import constants
-from apps.src.schemas.train_config import TrainConfig
+from apps.src.schemas.train_schema import TrainSchema
 from datasets import load_dataset, DatasetDict
 
 
 class DataLoadManager:
-    def __init__(self, train_config: TrainConfig):
+    def __init__(self, train_config: TrainSchema):
         self.train_config = train_config
         self.logger = logging.getLogger(constants.LOGGER_INFO_NAME)
 

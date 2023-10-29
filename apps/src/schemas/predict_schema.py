@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from apps.src.config import constants
 
 
-class PredictConfig(BaseModel):
+class PredictSchema(BaseModel):
     model_type: str
     text_dataset: str
     base_dir: str

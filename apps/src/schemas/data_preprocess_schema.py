@@ -1,5 +1,5 @@
 from pydantic import BaseModel
 
-class DataPreprocessConfig(BaseModel):
+class DataPreprocessSchema(BaseModel):
     text_dataset: str
     base_dir: str

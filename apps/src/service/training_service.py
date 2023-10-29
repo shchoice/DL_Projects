@@ -1,12 +1,12 @@
 import logging
 
 from apps.src.config import constants
+from apps.src.modules.training.model_config.base_config import BaseConfig
 from apps.src.modules.training.trainer import Trainer
-from apps.src.schemas.train_config import TrainConfig
 
 
 class TrainingService:
-    def __init__(self, train_config: TrainConfig):
+    def __init__(self, train_config: BaseConfig):
         self.train_config = train_config
         self.trainer = Trainer(train_config)
 
@@ -16,6 +16,5 @@ class TrainingService:
         dataset = self.trainer.prepare_dataset()
         trainer, test_dataset = self.trainer.train(dataset)
         self.trainer.evalutate(trainer, test_dataset)
-        self.trainer.initialize_predictor(trainer.model)
 
         del trainer

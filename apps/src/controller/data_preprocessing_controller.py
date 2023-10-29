@@ -9,7 +9,7 @@ from fastapi_utils.inferring_router import InferringRouter
 
 from apps.src.config import constants
 from apps.src.exception.data_preprocess_exception import DataPreprocessException
-from apps.src.schemas.data_preprocess_config import DataPreprocessConfig
+from apps.src.schemas.data_preprocess_schema import DataPreprocessSchema
 from apps.src.service.data_preprocessing_service import DataPreprocessService
 from apps.src.utils.log.log_message import LogMessage
 from apps.src.utils.yaml.load import load_data_config
@@ -24,7 +24,7 @@ class DataPreprocessingController:
         self.log_message = LogMessage()
 
     @router.post('/preprocess')
-    def data_preprocessing(self, data_preprocess_config: DataPreprocessConfig, response: Response) -> Dict[str, Any]:
+    def data_preprocessing(self, data_preprocess_config: DataPreprocessSchema, response: Response) -> Dict[str, Any]:
         try:
             data_config = load_data_config(
                 yaml_file=constants.CONFIG_DATA_YAML_FILE_NAME,
