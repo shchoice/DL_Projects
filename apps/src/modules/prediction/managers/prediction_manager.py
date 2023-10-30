@@ -14,8 +14,3 @@ class PredictionManager(metaclass=SingletonMeta):
             PredictionManager._instances[key] = PredictorFactory.create_predictor(self.config)
 
         return PredictionManager._instances[key]
-
-    def load_trained_model(self):
-        key = (self.config['model_type'], self.config['base_dir'], self.config['text_dataset'])
-        PredictionManager._instances[key] = PredictorFactory.create_predictor(self.config)
-        # PredictionManager._instances[key].model_exchange()

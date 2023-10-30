@@ -45,6 +45,10 @@ class KoBERTPredictor:
 
         return top_k_decoded_labels, top_k_values
 
+    def model_exchange(self):
+        model = self.model_manager.get_model_instance(mode='predict')
+        self.model_manager.update_model_instance(model=model, mode='predict')
+
     def _get_gpu_device(self):
         gpu_id = self.predict_config['gpu_id']
 

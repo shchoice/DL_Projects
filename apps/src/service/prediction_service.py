@@ -16,4 +16,5 @@ class PredictionService:
         return top_k_decoded_labels, top_k_values
 
     def run_model_exchange(self):
-        self.prediction_manager.load_trained_model()
+        predictor = self.prediction_manager.get_model_instance()
+        predictor.model_exchange()

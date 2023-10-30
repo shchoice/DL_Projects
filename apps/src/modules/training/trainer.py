@@ -60,7 +60,7 @@ class Trainer:
 
         self.train_config.update_and_save_config(self.train_config)
         self.logger.info("Config File Updated and saved!")
-        self.model_manager.update_model_instance(trainer.model)
+        self.model_manager.update_model_instance(model=trainer.model, mode='train')
         self.logger.info("New Trained Model is Loaded!")
 
         return trainer, dataset['test']
