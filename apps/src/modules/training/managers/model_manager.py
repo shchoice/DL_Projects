@@ -23,10 +23,10 @@ class ModelManager(metaclass=SingletonMeta):
         if mode == 'train':
             if key in ModelManager._classifier_instances:
                 ModelManager._classifier_instances[key].model = model
-                ModelManager._classifier_instances[key].model.load_model(num_labels=None, mode='predict')
+                ModelManager._classifier_instances[key].load_model(num_labels=None, mode='predict')
             else:
                 raise KeyError(f"Key {self.config['model_type']}, {self.config['base_dir']}, {self.config['text_dataset']} "
                                f"not found in the model instances.")
         elif mode == 'predict':
             ModelManager._classifier_instances[key].model = model
-            ModelManager._classifier_instances[key].model.load_model(num_labels=None, mode='predict')
+            ModelManager._classifier_instances[key].load_model(num_labels=None, mode='predict')
