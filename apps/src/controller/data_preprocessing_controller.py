@@ -10,7 +10,7 @@ from fastapi_utils.inferring_router import InferringRouter
 from apps.src.config import constants
 from apps.src.exception.data_preprocess_exception import DataPreprocessException
 from apps.src.schemas.data_preprocess_schema import DataPreprocessSchema
-from apps.src.service.data_preprocessing_service import DataPreprocessService
+from apps.src.service.data_preprocessing_service import DataPreprocessingService
 from apps.src.utils.log.log_message import LogMessage
 from apps.src.utils.yaml.load import load_data_config
 
@@ -31,7 +31,7 @@ class DataPreprocessingController:
                 schema=data_preprocess_config
             )
 
-            data_preprocessing_service = DataPreprocessService(data_config)
+            data_preprocessing_service = DataPreprocessingService(data_config)
             data_preprocessing_service.run_preprocess()
 
             response.status_code = status.HTTP_200_OK

@@ -1,10 +1,9 @@
 import logging
 import sys
-from urllib import response
 
+from fastapi import Response, status
 from fastapi_utils.cbv import cbv
 from fastapi_utils.inferring_router import InferringRouter
-from starlette import status
 
 from apps.src.config import constants
 from apps.src.modules.common.config_manager import ConfigManager
@@ -21,7 +20,7 @@ class ConfigController:
         self.log_message = LogMessage()
 
     @router.patch('/config/update')
-    def config_update_contoller(self, update_schema: UpdateSchema):
+    def config_update_contoller(self, update_schema: UpdateSchema, response: Response):
         try:
             config = ConfigManager.get_config_instance(
                 update_schema.model_type, update_schema.base_dir, update_schema.text_dataset
@@ -34,6 +33,7 @@ class ConfigController:
 
             config.save_model_config()
 
+            response.status_code = status.HTTP_200_OK
             return {"message": "Configuration updated successfully"}
         except Exception as e:
             exc_type, exc_value, exc_traceback = sys.exc_info()
@@ -87,7 +87,8 @@ class ConfigController:
 
         return new_update_schema
 
-    def set_nested_dict(self, data_dict, key_path, value):
+    @staticmethod
+    def set_nested_dict(data_dict, key_path, value):
         for key in key_path[:-1]:
             data_dict = data_dict.setdefault(key, {})
         data_dict[key_path[-1]] = value

@@ -71,16 +71,16 @@ LOGGING_CONFIG = {
             "formatter": "generic",
             "filename_template": VOLUME_INFO_LOG_PATH[:-4] + datetime.now().strftime('-%Y%m%d') + ".log",
             "when": log_config['rotate']['when'],
-                "backupCount": log_config['rotate']['backupCount'],
-            },
-            "error_file": {
-                "class": "rotating_file_handler.CustomTimedRotatingFileHandler",
-                "formatter": "error",
-                "filename_template": VOLUME_ERROR_LOG_PATH[:-4] + datetime.now().strftime('-%Y%m%d') + ".log",
-                "when": log_config['rotate']['when'],
-                "backupCount": log_config['rotate']['backupCount'],
-            },
+            "backupCount": log_config['rotate']['backupCount'],
         },
+        "error_file": {
+            "class": "rotating_file_handler.CustomTimedRotatingFileHandler",
+            "formatter": "error",
+            "filename_template": VOLUME_ERROR_LOG_PATH[:-4] + datetime.now().strftime('-%Y%m%d') + ".log",
+            "when": log_config['rotate']['when'],
+            "backupCount": log_config['rotate']['backupCount'],
+        },
+    },
     "formatters": {
         "console": {
             "format": "%(levelname)s: %(message)s",

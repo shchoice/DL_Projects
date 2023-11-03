@@ -6,7 +6,7 @@ from apps.src.config import constants
 from apps.src.modules.common.label_encoder_manager import LabelEncoderManager
 from apps.src.modules.training.managers.data_load_manager import DataLoadManager
 from apps.src.modules.training.model_config.base_config import BaseConfig
-from apps.src.modules.training.util.early_stopping import SaveLastModelCallback
+from apps.src.modules.training.utils.early_stopping import SaveLastModelCallback
 from apps.src.modules.training.managers.metrics_manager import MetricsManager
 from apps.src.modules.training.managers.model_manager import ModelManager
 from apps.src.modules.training.trainer_with_logger import TrainerWithLogger

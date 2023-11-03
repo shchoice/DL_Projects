@@ -6,8 +6,6 @@ import yaml
 from apps.src.config import constants
 from apps.src.exception.model_exchange_exception import ModelExchangeException
 from apps.src.schemas.data_preprocess_schema import DataPreprocessSchema
-from apps.src.schemas.predict_schema import PredictSchema
-from apps.src.schemas.train_schema import TrainSchema
 from apps.src.schemas.reload_schema import ReloadSchema
 
 

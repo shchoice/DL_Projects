@@ -8,9 +8,10 @@ from apps.src.config.logging_config import LOGGING_CONFIG
 from utils.yaml.load import load_yaml_config
 from router import classifier_router
 
-
 app = FastAPI()
 app.include_router(classifier_router)
+
+
 @app.on_event("startup")
 async def startup_event():
     logging.config.dictConfig(LOGGING_CONFIG)
