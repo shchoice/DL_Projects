@@ -10,9 +10,9 @@ CODE_BASE_DIR = str(Path(__file__).resolve().parent.parent)
 sys.path.insert(0, CODE_BASE_DIR + '/utils/log')
 
 VOLUME_BASE_DIR = str(Path(__file__).resolve().parent.parent.parent)
-VOLUME_ACCESS_LOG_PATH = VOLUME_BASE_DIR + '/volumes/logs/access.log'
-VOLUME_INFO_LOG_PATH = VOLUME_BASE_DIR + '/volumes/logs/info.log'
-VOLUME_ERROR_LOG_PATH = VOLUME_BASE_DIR + '/volumes/logs/error.log'
+VOLUME_ACCESS_LOG_PATH = VOLUME_BASE_DIR + '/volumes/logs/access' + constants.LOGGING_EXTENSION_NAME
+VOLUME_INFO_LOG_PATH = VOLUME_BASE_DIR + '/volumes/logs/info' + constants.LOGGING_EXTENSION_NAME
+VOLUME_ERROR_LOG_PATH = VOLUME_BASE_DIR + '/volumes/logs/error' + constants.LOGGING_EXTENSION_NAME
 
 log_config = load_yaml_config(constants.CONFIG_LOGGING_YAML_FILE_NAME)
 
@@ -62,21 +62,21 @@ LOGGING_CONFIG = {
         "access_file": {
             "class": "rotating_file_handler.CustomTimedRotatingFileHandler",
             "formatter": "access",
-            "filename_template": VOLUME_ACCESS_LOG_PATH[:-4] + datetime.now().strftime('-%Y%m%d') + ".log",
+            "filename_template": VOLUME_ACCESS_LOG_PATH[:-4] + datetime.now().strftime('-%Y%m%d') + constants.LOGGING_EXTENSION_NAME,
             "when": log_config['rotate']['when'],
             "backupCount": log_config['rotate']['backupCount'],
         },
         "info_file": {
             "class": "rotating_file_handler.CustomTimedRotatingFileHandler",
             "formatter": "generic",
-            "filename_template": VOLUME_INFO_LOG_PATH[:-4] + datetime.now().strftime('-%Y%m%d') + ".log",
+            "filename_template": VOLUME_INFO_LOG_PATH[:-4] + datetime.now().strftime('-%Y%m%d') + constants.LOGGING_EXTENSION_NAME,
             "when": log_config['rotate']['when'],
             "backupCount": log_config['rotate']['backupCount'],
         },
         "error_file": {
             "class": "rotating_file_handler.CustomTimedRotatingFileHandler",
             "formatter": "error",
-            "filename_template": VOLUME_ERROR_LOG_PATH[:-4] + datetime.now().strftime('-%Y%m%d') + ".log",
+            "filename_template": VOLUME_ERROR_LOG_PATH[:-4] + datetime.now().strftime('-%Y%m%d') + constants.LOGGING_EXTENSION_NAME,
             "when": log_config['rotate']['when'],
             "backupCount": log_config['rotate']['backupCount'],
         },
