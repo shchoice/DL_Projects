@@ -1,4 +1,4 @@
-from evaluate import load as load_metric
+from datasets import load_metric
 
 
 class MetricsManager:
