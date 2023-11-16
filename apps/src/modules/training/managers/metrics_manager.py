@@ -1,11 +1,11 @@
-from datasets import load_metric
+from evaluate import load
 
 
 class MetricsManager:
-    ACCURACY_METRIC = load_metric("accuracy")
-    PRECISION_METRIC = load_metric("precision")
-    RECALL_METRIC = load_metric("recall")
-    F1_METRIC = load_metric("f1")
+    ACCURACY_METRIC = load("accuracy")
+    PRECISION_METRIC = load("precision")
+    RECALL_METRIC = load("recall")
+    F1_METRIC = load("f1")
 
     @classmethod
     def compute_metrics(cls, prediction_output):
