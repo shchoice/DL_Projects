@@ -31,14 +31,7 @@ class PredictionController:
     def prediction_controller(self, predict_schema: PredictSchema, response: Response) -> Dict[str, Any]:
         try:
             start_time = time.perf_counter()
-            predict_config = ConfigManager.get_config_instance(
-                predict_schema.model_type, predict_schema.base_dir, predict_schema.text_dataset
-            )
-            predict_config['top_k'] = predict_schema.top_k
-            predict_config['documents'] = predict_schema.documents
-            predict_config.set_model_config(['gpu_id'], predict_schema.gpu_id)
-            predict_config.set_model_config(['load_trained_model'], predict_schema.load_trained_model)
-            predict_config.set_model_config(['load_model_name'], predict_schema.load_model_name)
+            predict_config = ConfigManager.configure(config_type="Prediction", schema=predict_schema)
 
             predict_service = PredictionService(predict_config)
             top_k_decoded_labels, top_k_values = predict_service.run_predict()

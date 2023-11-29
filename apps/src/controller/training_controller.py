@@ -25,12 +25,7 @@ class TrainingController:
     @router.post('/train')
     def training_controller(self, train_schema: TrainSchema, response: Response) -> Dict[str, Any]:
         try:
-            train_config = ConfigManager.get_config_instance(
-                train_schema.model_type, train_schema.base_dir, train_schema.text_dataset
-            )
-            train_config.set_model_config(['gpu_id'], train_schema.gpu_id)
-            train_config.set_model_config(['load_trained_model'], train_schema.load_trained_model)
-            train_config.set_model_config(['load_model_name'], train_schema.load_model_name)
+            train_config = ConfigManager.configure(config_type="Training", schema=train_schema)
 
             training_service = TrainingService(train_config)
             training_service.run_classifier()

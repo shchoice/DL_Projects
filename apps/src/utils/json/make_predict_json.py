@@ -43,7 +43,7 @@ def set_response_json(hits_json: Dict, predict_config: Dict[str, Any], exec_time
                     "value": predict_config['top_k'],
                 },
                 "model": predict_config['model_type'],
-                "collection": predict_config['text_dataset'],
+                "text_dataset": predict_config['text_dataset'],
                 "hits": hits_json
             }
         }

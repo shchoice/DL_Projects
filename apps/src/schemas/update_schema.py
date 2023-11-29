@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field
 class UpdateSchema(BaseModel):
     model_type: str
     base_dir: str
-    collection: str
+    text_dataset: str
     gpu_id: Optional[str] = Field(default='auto', config_path=None)
     load_trained_model: Optional[bool] = Field(default='false', config_path=None)
     load_model_name: Optional[str] = Field(default='checkpoint-best', config_path=None)
